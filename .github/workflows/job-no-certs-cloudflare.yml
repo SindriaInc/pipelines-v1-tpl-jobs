@@ -1,0 +1,47 @@
+name: Job noOps Certs Route53
+
+on:
+  workflow_call:
+    secrets:
+      _CLOUDFLARE_CONFIG:
+        description: cloudflare api key
+        required: true
+    inputs:
+      CRT_CERTBOT_CACHE:
+        description: certbot
+        required: true
+        type: string
+      CRT_CERTBOT_EMAIL:
+        description: certbot
+        required: true
+        type: string
+      CRT_CERTBOT_DOMAIN:
+        description: certbot
+        required: true
+        type: string
+
+jobs:
+  certs:
+    name: Certs
+    runs-on: ubuntu-latest
+    container:
+      image: sindriainc/pipeline-az-devops:2.0.0
+      env:
+        CLOUDFLARE_CONFIG: ${{ secrets_CLOUDFLARE_CONFIG }}
+        CRT_CERTBOT_CACHE: ${{ inputs.CRT_CERTBOT_CACHE }}
+        CRT_CERTBOT_EMAIL: ${{ inputs.CRT_CERTBOT_EMAIL }}
+        CRT_CERTBOT_DOMAIN: ${{ inputs.CRT_CERTBOT_DOMAIN }}
+      volumes:
+        - /staging:/staging
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Certs
+        run: |
+          echo ${AWS_ACCESS_KEY_ID}
+          echo ${AWS_SECRET_ACCESS_KEY}
+          echo ${AWS_DEFAULT_REGION}
+          echo ${CRT_CERTBOT_CACHE}
+          echo ${CRT_CERTBOT_EMAIL}
+          echo ${CRT_CERTBOT_DOMAIN}
+          sudo docker run --rm -t --env IAC_MODE=${IAC_MODE} --env CLOUDFLARE_CONFIG=${CLOUDFLARE_CONFIG} --env CRT_CERTBOT_EMAIL=${CRT_CERTBOT_EMAIL} --env CRT_CERTBOT_DOMAIN=${CRT_CERTBOT_DOMAIN} sindriainc/xpipe-no-certs-cloudflare:1.0.0
+          cowsay -f pikachu "Build Success"
