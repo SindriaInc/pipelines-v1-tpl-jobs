@@ -3,10 +3,20 @@ name: Job noOps Certs Route53
 on:
   workflow_call:
     secrets:
+      _AWS_ACCESS_KEY_ID:
+        description: awscli
+        required: true
+      _AWS_SECRET_ACCESS_KEY:
+        description: awscli
+        required: true
       _CLOUDFLARE_CONFIG:
         description: cloudflare api key
         required: true
     inputs:
+      AWS_DEFAULT_REGION:
+        description: awscli
+        required: true
+        type: string
       CRT_CERTBOT_CACHE:
         description: certbot
         required: true
