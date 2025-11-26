@@ -56,5 +56,5 @@ jobs:
           echo ${CRT_CERTBOT_CACHE}
           echo ${CRT_CERTBOT_EMAIL}
           echo ${CRT_CERTBOT_DOMAIN}
-          sudo docker run --rm -t --env IAC_MODE=${IAC_MODE} --env CLOUDFLARE_CONFIG=${CLOUDFLARE_CONFIG} --env CRT_CERTBOT_CACHE=${CRT_CERTBOT_CACHE} --env CRT_CERTBOT_EMAIL=${CRT_CERTBOT_EMAIL} --env CRT_CERTBOT_DOMAIN=${CRT_CERTBOT_DOMAIN} sindriainc/xpipe-no-certs-cloudflare:1.0.0
+          sudo docker run --rm -t --env IAC_MODE=${IAC_MODE} --env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} --env AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} --env CLOUDFLARE_CONFIG=${CLOUDFLARE_CONFIG} --env CRT_CERTBOT_CACHE=${CRT_CERTBOT_CACHE} --env CRT_CERTBOT_EMAIL=${CRT_CERTBOT_EMAIL} --env CRT_CERTBOT_DOMAIN=${CRT_CERTBOT_DOMAIN} sindriainc/xpipe-no-certs-cloudflare:1.0.0
           cowsay -f pikachu "Build Success"
