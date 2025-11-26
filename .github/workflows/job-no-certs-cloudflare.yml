@@ -3,20 +3,10 @@ name: Job noOps Certs Route53
 on:
   workflow_call:
     secrets:
-      _AWS_ACCESS_KEY_ID:
-        description: awscli
-        required: true
-      _AWS_SECRET_ACCESS_KEY:
-        description: awscli
-        required: true
       _CLOUDFLARE_CONFIG:
         description: cloudflare api key
         required: true
     inputs:
-      AWS_DEFAULT_REGION:
-        description: awscli
-        required: true
-        type: string
       CRT_CERTBOT_CACHE:
         description: certbot
         required: true
@@ -37,6 +27,9 @@ jobs:
     container:
       image: sindriainc/pipeline-az-devops:2.0.0
       env:
+        AWS_ACCESS_KEY_ID: ${{ secrets._AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets._AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ inputs.AWS_DEFAULT_REGION }}
         CLOUDFLARE_CONFIG: ${{ secrets._CLOUDFLARE_CONFIG }}
         CRT_CERTBOT_CACHE: ${{ inputs.CRT_CERTBOT_CACHE }}
         CRT_CERTBOT_EMAIL: ${{ inputs.CRT_CERTBOT_EMAIL }}
